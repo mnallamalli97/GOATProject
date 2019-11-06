@@ -1,6 +1,6 @@
 package com.example.mnallamalli97.goatproject.goatproject.services;
 
-import com.example.mnallamalli97.goatproject.goatproject.models.Forecast;
+import com.example.mnallamalli97.goatproject.goatproject.models.Forcast;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,7 +12,7 @@ import retrofit2.http.Path;
  */
 public interface WeatherService {
     @GET("{latitude},{longitude}")
-    Call<Forecast> getWeather(
+    Call<Forcast> getWeather(
             @Path("latitude") Double latitude,
             @Path("longitude") Double longitude
     );
