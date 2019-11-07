@@ -2,12 +2,15 @@ package com.example.mnallamalli97.goatproject.goatproject.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.mnallamalli97.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.adapter.ForcastAdapter;
 import com.example.mnallamalli97.goatproject.goatproject.models.DarkSky;
 
 import android.app.Fragment;
@@ -20,6 +23,8 @@ import java.util.TimeZone;
 
 public class ForcastDayFragment extends Fragment{
     View view;
+    private RecyclerView recyclerView;
+    public ForcastAdapter adapter;
 
     /**
      * Creates a new instance of ForecastDetailFragment. This is primarily used so that we can pass the index (int selectedDay).
@@ -46,6 +51,9 @@ public class ForcastDayFragment extends Fragment{
         // Setup the view so that we can access it's components.
         if(view == null) this.view = inflater.inflate(R.layout.forcast_fragment_hourly, container, false);
 
+        this.adapter = new ForcastAdapter(null, view.getContext());
+
+        setupRecyclerView();
         // Populate all the text views on the fragment with the correct data.
         populateWeatherData();
 
@@ -77,6 +85,8 @@ public class ForcastDayFragment extends Fragment{
         long highTempLong           = Math.round(Double.valueOf(args.getString("high")));
 
 
+
+
         /**
          * Populate data from the bundle into the text views.
          */
@@ -84,6 +94,20 @@ public class ForcastDayFragment extends Fragment{
         condition.setText(conditionString);
         lowTemp.setText(getString(R.string.weather_temperature, lowTempLong));
         highTemp.setText(getString(R.string.weather_temperature, highTempLong));
+    }
+
+    /**
+     * Fetches and configures the RecyclerView to be displayed.
+     */
+    private void setupRecyclerView() {
+        // Get the recyclerview so that we can set it up.
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_hour_forecast);
+        recyclerView.setAdapter(adapter);
+
+        // Setup the layout as Linear.
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
     }
 
     /**

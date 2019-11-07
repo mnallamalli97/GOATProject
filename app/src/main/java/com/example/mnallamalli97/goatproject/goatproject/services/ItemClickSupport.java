@@ -3,7 +3,12 @@ package com.example.mnallamalli97.goatproject.goatproject.services;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.mnallamalli97.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.R;
+
+/**
+ * THIS IS A TEMPLATE CLASS GIVEN BY little robots. ALL THE FUNCTIONS HERE WERE NOT WRITTEN BY ME.
+ * https://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/
+ */
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;

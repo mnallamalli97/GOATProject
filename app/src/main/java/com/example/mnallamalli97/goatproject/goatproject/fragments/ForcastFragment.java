@@ -1,10 +1,12 @@
 package com.example.mnallamalli97.goatproject.goatproject.fragments;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.mnallamalli97.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.R;
 import com.example.mnallamalli97.goatproject.goatproject.adapter.ForcastAdapter;
 import com.example.mnallamalli97.goatproject.goatproject.models.Forcast;
 import com.example.mnallamalli97.goatproject.goatproject.models.Weather;
@@ -24,11 +26,14 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
     private View view;
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Only inflate our view and do the setup functions if the view is null. This prevents pop in of data and unnecessary API calls.
-        if(view == null) {
+        if (view == null) {
             this.view = inflater.inflate(R.layout.forcast_fragment, container, false);
 
             // Setup the adapter so that it can be modified later asynchronously.
@@ -39,23 +44,10 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
 
             // Set up the recyclerview.
             setupRecyclerView();
-
-            // Make the settings button clickable.
-            setupSettingsButton();
         }
 
         return view;
     }
-
-
-    /**
-     * Makes the settings button clickable by adding a click listener.
-     */
-    private void setupSettingsButton() {
-        View settingsButton = view.findViewById(R.id.button_settings);
-        settingsButton.setOnClickListener(this);
-    }
-
 
     /**
      * If the user has provided a location, this function calls the Darksky API and populates all data accordingly.
@@ -75,13 +67,21 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
 
             // If they haven't, ask them to put in a location.
         } else {
-            AddCityFragment addCityDialogFragment = new AddCityFragment().newInstance();
+            ManualEntry addCityDialogFragment = new ManualEntry().newInstance();
 
             if (!addCityDialogFragment.isActive()) {
                 addCityDialogFragment.show(getFragmentManager(), "fragment_add_city");
             }
         }
     }
+
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                12);
+    }
+
+
 
     /**
      * Fetches and configures the RecyclerView to be displayed.
@@ -139,6 +139,8 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
         long lowTemp        = Math.round(weatherData.getDaily().getData().get(0).getTemperatureMin());
         long highTemp       = Math.round(weatherData.getDaily().getData().get(0).getTemperatureMax());
         long windSpeed      = Math.round(weatherData.getCurrently().getWindSpeed());
+
+
 
         /**
          *  Populate all the text views.

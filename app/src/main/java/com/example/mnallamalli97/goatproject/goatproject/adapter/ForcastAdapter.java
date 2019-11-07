@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
-import com.example.mnallamalli97.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.R;
 import com.example.mnallamalli97.goatproject.goatproject.models.DarkSky;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +38,8 @@ public class ForcastAdapter extends RecyclerView.Adapter<ForcastViewHolder> {
     public void onBindViewHolder(ForcastViewHolder holder, int position) {
         DarkSky day = weeklyForecast.get(position);
 
-        String dayName = convertEpochToString(day.getTime(), "EEEE", "GMT-6:00");
+
+        String dayName = makeDate(day.getTime(), "EEEE", "GMT-6:00");
         String dayNameFormatted = String.format(Locale.ENGLISH, "%s", dayName);
 
         // Setup high and low temps.
@@ -63,16 +64,13 @@ public class ForcastAdapter extends RecyclerView.Adapter<ForcastViewHolder> {
         updateView();
     }
 
-    public static String convertEpochToString(Integer epoch, String format, String timezone) {
+    public static String makeDate(Integer epoch, String format, String timezone) {
         // Convert the epoch to a long and then create a new date with it.
         Date date = new Date(epoch.longValue() * 1000);
-
         // Create a new calendar using the provided timezone.
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-
         // Add the new date to the calendar.
         calendar.setTime(date);
-
         // Return a formatted date string using SimpleDateFormat and the provided format.
         return new SimpleDateFormat(format, Locale.ENGLISH).format(calendar.getTime());
 

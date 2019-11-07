@@ -3,6 +3,11 @@ package com.example.mnallamalli97.goatproject.goatproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/** models created using what the example request looks like from:
+ * https://darksky.net/dev/docs#forecast-request
+ * did not write this code. Got it directly from darksky.
+ **/
+
 public class Currently {
 
     @SerializedName("apparentTemperature")

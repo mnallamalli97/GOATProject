@@ -4,7 +4,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.mnallamalli97.goatproject.R;
+import com.example.mnallamalli97.goatproject.goatproject.R;
+
+import org.w3c.dom.Text;
 
 public class ForcastViewHolder extends RecyclerView.ViewHolder{
     TextView day;

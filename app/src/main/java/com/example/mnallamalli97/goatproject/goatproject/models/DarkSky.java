@@ -4,6 +4,10 @@ package com.example.mnallamalli97.goatproject.goatproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * DID NOT WRITE THIS CODE. GOT IT DIRECTLY FROM DARKSKY
+ */
+
 public class DarkSky {
 
     @SerializedName("apparentTemperatureMax")
@@ -88,37 +92,6 @@ public class DarkSky {
     @Expose
     private String precipType;
 
-    public Double getApparentTemperatureMax() {
-        return apparentTemperatureMax;
-    }
-
-    public void setApparentTemperatureMax(Double apparentTemperatureMax) {
-        this.apparentTemperatureMax = apparentTemperatureMax;
-    }
-
-    public Integer getApparentTemperatureMaxTime() {
-        return apparentTemperatureMaxTime;
-    }
-
-    public void setApparentTemperatureMaxTime(Integer apparentTemperatureMaxTime) {
-        this.apparentTemperatureMaxTime = apparentTemperatureMaxTime;
-    }
-
-    public Double getApparentTemperatureMin() {
-        return apparentTemperatureMin;
-    }
-
-    public void setApparentTemperatureMin(Double apparentTemperatureMin) {
-        this.apparentTemperatureMin = apparentTemperatureMin;
-    }
-
-    public Integer getApparentTemperatureMinTime() {
-        return apparentTemperatureMinTime;
-    }
-
-    public void setApparentTemperatureMinTime(Integer apparentTemperatureMinTime) {
-        this.apparentTemperatureMinTime = apparentTemperatureMinTime;
-    }
 
     public Double getCloudCover() {
         return cloudCover;
@@ -242,18 +215,6 @@ public class DarkSky {
 
     public Double getTemperatureMin() {
         return temperatureMin;
-    }
-
-    public void setTemperatureMin(Double temperatureMin) {
-        this.temperatureMin = temperatureMin;
-    }
-
-    public Integer getTemperatureMinTime() {
-        return temperatureMinTime;
-    }
-
-    public void setTemperatureMinTime(Integer temperatureMinTime) {
-        this.temperatureMinTime = temperatureMinTime;
     }
 
     public Integer getTime() {

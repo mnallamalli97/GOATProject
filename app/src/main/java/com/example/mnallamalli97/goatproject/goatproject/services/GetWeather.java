@@ -15,6 +15,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * THIS IS A TEMPLATE CLASS GIVEN BY RETROFIT. ALL THE FUNCTIONS HERE WERE NOT WRITTEN BY ME.
+ */
+
+
 public class GetWeather {
     private static final String BASE_URL = "https://api.darksky.net/forecast/";
     private static Retrofit retrofit = null;
@@ -35,12 +40,13 @@ public class GetWeather {
     }
 
     private static WeatherService getWeatherService(String apiKey) {
-        return getClient(BASE_URL+apiKey).create(WeatherService.class);
+        return getClient(BASE_URL+apiKey+'/').create(WeatherService.class);
     }
 
     /**
      * Pulls weather data from the Darksky API using the provided location. On success it updates the adapter and forecastMasterFragment.
-     * @param location Used to pull the weather data for this particular location.
+     * @param longitude Used to pull the weather data for this particular location.
+     * @param latitude Used to pull the weather data for this particular location.
      * @param adapter Used to update the adapter of the RecyclerView for forecastMasterFragment.
      * @param apiKey Needed to access the Darksky api.
      * @param forcastFragment Used to update the current conditions on this fragment.
@@ -49,6 +55,7 @@ public class GetWeather {
         WeatherService api = GetWeather.getWeatherService(apiKey);
 
         Log.i("API", api.getWeather(location.getLatitude(), location.getLongitude()).request().url().toString());
+
 
         api.getWeather(location.getLatitude(), location.getLongitude()).enqueue(new Callback<Forcast>() {
             @Override

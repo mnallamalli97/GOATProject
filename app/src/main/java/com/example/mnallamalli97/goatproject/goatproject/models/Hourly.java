@@ -5,6 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/** models created using what the example request looks like from:
+ * https://darksky.net/dev/docs#forecast-request
+ * did not write this code. Got it directly from darksky.
+ **/
+
 public class Hourly {
 
     @SerializedName("data")

@@ -1,17 +1,27 @@
 package com.example.mnallamalli97.goatproject.goatproject.models;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationManager;
 
 public class Weather {
     String name;
     String latitude;
     String longitude;
 
-    public WeatherLocation(Activity activity) {
+
+    public Weather(Activity activity) {
         setName(getStringFromSharedPrefs("city", activity));
         setLatitude(getStringFromSharedPrefs("latitude", activity));
         setLongitude(getStringFromSharedPrefs("longitude", activity));
+    }
+
+    public static String getStringFromSharedPrefs(String key, Activity activity) {
+        SharedPreferences sharedPrefs = activity.getPreferences(Context.MODE_PRIVATE);
+
+        return sharedPrefs.getString(key, null);
     }
 
     public String getName() {
