@@ -47,24 +47,28 @@ public class ManualEntry extends DialogFragment {
                     Geocoder geocoder = new Geocoder(getActivity());
 
                     Address location = geocoder.getFromLocationName(providedLocation, 1).get(0);
-                    if (location == null){
-                        return;
+
+                    if (location != null){
+                        SharedPreferences sharedPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        sharedPrefs
+                                .edit()
+                                .putString("city", location.getAddressLine(0))
+                                .apply();
+
+                        sharedPrefs
+                                .edit()
+                                .putString("latitude", String.valueOf(location.getLatitude()))
+                                .apply();
+
+                        sharedPrefs
+                                .edit()
+                                .putString("longitude", String.valueOf(location.getLongitude()))
+                                .apply();
+                    } else {
+                        ManualEntry addCityDialogFragment = new ManualEntry().newInstance();
+                        addCityDialogFragment.show(getFragmentManager(), "fragment_add_city");
                     }
-                    SharedPreferences sharedPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
-                    sharedPrefs
-                            .edit()
-                            .putString("city", location.getAddressLine(0))
-                            .apply();
 
-                    sharedPrefs
-                            .edit()
-                            .putString("latitude", String.valueOf(location.getLatitude()))
-                            .apply();
-
-                    sharedPrefs
-                            .edit()
-                            .putString("longitude", String.valueOf(location.getLongitude()))
-                            .apply();
 
                 } catch (IOException e) {
                     e.printStackTrace();
