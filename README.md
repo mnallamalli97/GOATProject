@@ -20,9 +20,9 @@ I followed the principles of MVC architecture. The adapters filled data in UI co
 ### Helper Classes
 These are classes that I did not write, but were written by 3rd party developers. I also made sure to comment the sources I found these classes. The meat of my work is done in the adapters and fragments.
 
-⋅⋅* `ItemClickSupport`.
-⋅⋅* `GetWeather`.... I implemented the `getWeatherData` and `getHourlyWeatherData` functions, but not the `getClient`.
-⋅⋅* All of the models I used were provided by DarkSky in their documentation. I had to split up some of their models to fit my requirement (exe. had to remove the fields from `DarkSky` that were not present for `Hourly`
+* `ItemClickSupport`.
+* `GetWeather`.... I implemented the `getWeatherData` and `getHourlyWeatherData` functions, but not the `getClient`.
+* All of the models I used were provided by DarkSky in their documentation. I had to split up some of their models to fit my requirement (exe. had to remove the fields from `DarkSky` that were not present for `Hourly`
 
 ### Lessons
 Originally, I ran into a lot of problems because when I was trying to work on daily and hourly fragments, I tried to do everything in the same fragment, using the same adapters. I would run into recyclerView binding issues when going between fragments. The lesson I learned was to split up functionality and keep them seperate. 
