@@ -20,7 +20,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * THIS IS A TEMPLATE CLASS GIVEN BY RETROFIT. ALL THE FUNCTIONS HERE WERE NOT WRITTEN BY ME.
+ * THIS IS A TEMPLATE CLASS GIVEN BY RETROFIT. THE getClient FUNCTION WAS NOT WRITTEN BY ME.
+ * I WROTE THE getWeatherData AND getHourlyWeatherData FUNCTION.
  */
 
 

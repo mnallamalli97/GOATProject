@@ -32,7 +32,7 @@ public class ManualEntry extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Please set a location. Enter Zipcode or city name");
+        builder.setTitle("Please set a VALID Zipcode or a city_name,state abbreviation");
 
         // Set up the input
         final EditText input = new EditText(getActivity());
