@@ -13,15 +13,11 @@ public class Weather {
 
 
     public Weather(Activity activity) {
-        setName(getStringFromSharedPrefs("city", activity));
-        setLatitude(getStringFromSharedPrefs("latitude", activity));
-        setLongitude(getStringFromSharedPrefs("longitude", activity));
-    }
-
-    public static String getStringFromSharedPrefs(String key, Activity activity) {
         SharedPreferences sharedPrefs = activity.getPreferences(Context.MODE_PRIVATE);
 
-        return sharedPrefs.getString(key, null);
+        setName(sharedPrefs.getString("city", null));
+        setLatitude(sharedPrefs.getString("latitude", null));
+        setLongitude(sharedPrefs.getString("longitude", null));
     }
 
     public String getName() {

@@ -1,12 +1,10 @@
 package com.example.mnallamalli97.goatproject.goatproject.fragments;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,21 +27,15 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
 
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Only inflate our view and do the setup functions if the view is null. This prevents pop in of data and unnecessary API calls.
-        //if (view == null) {
-            /*this*/ View view = inflater.inflate(R.layout.forcast_fragment, container, false);
-
-            // Setup the adapter so that it can be modified later asynchronously.
-            this.adapter = new ForcastAdapter(null, view.getContext());
+        View view = inflater.inflate(R.layout.forcast_fragment, container, false);
+        // Setup the adapter so that it can be modified later asynchronously.
+        this.adapter = new ForcastAdapter(null, view.getContext());
         // Set up the recyclerview.
         setupRecyclerView(view);
-
-        //}
-
         return view;
     }
 
@@ -53,6 +45,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
         // Fetch the location data and setup all weather data on this fragment.
         initializeWeatherData();
     }
+
 
     /**
      * If the user has provided a location, this function calls the Darksky API and populates all data accordingly.
@@ -78,6 +71,20 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
                 addCityDialogFragment.show(getFragmentManager(), "fragment_add_city");
             }
         }
+
+/**
+ * In the future, if we want to change their location, can enter another address.
+ */
+//        ImageButton imageButton = (ImageButton) getView().findViewById(R.id.imageButton);
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ManualEntry addCityDialogFragment = new ManualEntry().newInstance();
+//                if (!addCityDialogFragment.isActive()) {
+//                    addCityDialogFragment.show(getFragmentManager(), "fragment_add_city");
+//                }
+//            }
+//        });
     }
 
 
