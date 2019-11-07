@@ -1,8 +1,11 @@
 package com.example.mnallamalli97.goatproject.goatproject.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,10 @@ import android.widget.TextView;
 
 import com.example.mnallamalli97.goatproject.R;
 import com.example.mnallamalli97.goatproject.goatproject.adapter.ForcastAdapter;
-import com.example.mnallamalli97.goatproject.goatproject.models.Forecast;
+import com.example.mnallamalli97.goatproject.goatproject.models.Forcast;
+import com.example.mnallamalli97.goatproject.goatproject.models.Weather;
+import com.example.mnallamalli97.goatproject.goatproject.services.GetWeather;
+import com.example.mnallamalli97.goatproject.goatproject.services.ItemClickSupport;
 
 public class ForcastFragment extends Fragment implements View.OnClickListener {
     public ForcastAdapter adapter;
@@ -42,14 +48,6 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onClick(View v) {
-        // If the user taps the settings button. Send them to that fragment.
-        if(v.getId() == R.id.button_settings) {
-            FragmentHelper.pushToFragmentManager(getFragmentManager(), R.id.content_frame, new SettingsFragment(), true);
-        }
-    }
-
     /**
      * Makes the settings button clickable by adding a click listener.
      */
@@ -64,12 +62,12 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
      * Otherwise, a DialogFragment is shown that allows them to do so.
      */
     private void initializeWeatherData() {
-        WeatherLocation location = new WeatherLocation(getActivity());
+        Weather location = new Weather(getActivity());
 
         // Make sure the user has put in a location.
         if (location.getName() != null) {
             // Fetch the current forecast, which updates current conditions and weekly forecast.
-            WeatherApiUtils.getWeatherData(location.getLatitudeLongitude(), adapter, getString(R.string.dark_sky_api), this);
+            GetWeather.getWeatherData(location.getLatitudeLongitude(), adapter, getString(R.string.dark_sky_api), this);
 
             // Set the text on the location label.
             TextView locationLabel = (TextView) view.findViewById(R.id.text_location_name);
@@ -77,7 +75,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
 
             // If they haven't, ask them to put in a location.
         } else {
-            AddCityDialogFragment addCityDialogFragment = new AddCityDialogFragment().newInstance();
+            AddCityFragment addCityDialogFragment = new AddCityFragment().newInstance();
 
             if (!addCityDialogFragment.isActive()) {
                 addCityDialogFragment.show(getFragmentManager(), "fragment_add_city");
@@ -102,7 +100,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         // When the user taps an item, a new instance of ForecastDetailFragment is provided and the position they selected is passed.
-                        FragmentHelper.pushToFragmentManager(getFragmentManager(), R.id.content_frame, new ForecastDetailFragment().newInstance(adapter.weeklyForecast, position), true);
+                        pushToFragmentManager(getFragmentManager(), R.id.content_frame, new ForcastDayFragment().newInstance(adapter.weeklyForecast, position), true);
                     }
                 }
         );
@@ -116,7 +114,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
      * This populates all the current conditions on the fragment.
      * @param weatherData This is used to populate all of our labels.
      */
-    public void updateCurrentConditions(Forecast weatherData) {
+    public void updateCurrentConditions(Forcast weatherData) {
         // If the view doesn't exist, an error will occur because we are calling it below. Return to prevent this.
         if (view == null || !isAdded()) {
             return;
@@ -154,4 +152,25 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * Pushes a new fragment on to the fragment manager stack.
+     *
+     * @param fragmentManager Pass in the FragmentManager so that it can do the necessary work.
+     * @param target Id of the content frame to be targeted.
+     * @param fragment Fragment to be pushed onto the stack.
+     * @param addToBackStack Does this needed to be added to the back stack for navigation purposes?
+     */
+    public static void pushToFragmentManager(FragmentManager fragmentManager, int target, Fragment fragment, Boolean addToBackStack) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction().replace(target, fragment);
+
+        if(addToBackStack) transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }

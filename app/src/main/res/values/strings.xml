@@ -77,4 +77,6 @@
     <string name="weather_temperature">%d°</string>
     <string name="weather_percent">%d%%</string>
     <string name="weather_wind">%dmph</string>
+    <string name="dark_sky_api">3c26068b6051ea0632b81af38c988981</string>
+
 </resources>

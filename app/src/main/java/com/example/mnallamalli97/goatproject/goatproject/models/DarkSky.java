@@ -272,36 +272,4 @@ public class DarkSky {
         this.visibility = visibility;
     }
 
-    public Integer getWindBearing() {
-        return windBearing;
-    }
-
-    public void setWindBearing(Integer windBearing) {
-        this.windBearing = windBearing;
-    }
-
-    public Double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(Double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public Integer getPrecipIntensityMaxTime() {
-        return precipIntensityMaxTime;
-    }
-
-    public void setPrecipIntensityMaxTime(Integer precipIntensityMaxTime) {
-        this.precipIntensityMaxTime = precipIntensityMaxTime;
-    }
-
-    public String getPrecipType() {
-        return precipType;
-    }
-
-    public void setPrecipType(String precipType) {
-        this.precipType = precipType;
-    }
-
 }
