@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mnallamalli97.goatproject.goatproject.R;
@@ -79,13 +80,6 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void requestPermission(){
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                12);
-    }
-
-
 
     /**
      * Fetches and configures the RecyclerView to be displayed.
@@ -133,6 +127,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
         TextView currentWindLabel           = (TextView)  getView().findViewById(R.id.text_wind_speed);
         TextView todayHighTempLabel         = (TextView)  getView().findViewById(R.id.text_today_high);
         TextView todayLowTempLabel          = (TextView)  getView().findViewById(R.id.text_today_low);
+        ImageView weatherIcon               = (ImageView) getView().findViewById(R.id.weatherIcon);
 
         /**
          * Fetch all the data.
