@@ -5,10 +5,12 @@ I had a few limitations while doing this project.
 Unfortunately, I do not have a physical device for testing, so I was not able to retrieve `getlastknownlocation` as part of the  `LocationManager` class. I know that the specification had asked me to request user permission and then get their current location, but because I was working with an emulator, I was not able to implement this. I can explain how I would like to implement this:
 
 I was going to use the `LocationManager` class as follows:
-`LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
+```
+LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
 Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 double longitude = location.getLongitude();
-double latitude = location.getLatitude();`
+double latitude = location.getLatitude();
+```
 
 Before the `getLastKnownLocation` function call, I would have checked to see if the permission was granted or not. Then, I would have handled the permisson request using a `onRequestPermissionsResult`. I had to change my whole implementation of `getWeatherData` to instead take a type location and reworked my implementation. 
 
