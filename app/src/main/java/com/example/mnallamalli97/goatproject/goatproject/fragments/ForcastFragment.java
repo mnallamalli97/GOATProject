@@ -24,7 +24,7 @@ import com.example.mnallamalli97.goatproject.goatproject.services.ItemClickSuppo
 public class ForcastFragment extends Fragment implements View.OnClickListener {
     public ForcastAdapter adapter;
     private RecyclerView recyclerView;
-    private View view;
+    //private View view;
 
 
 
@@ -33,20 +33,24 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Only inflate our view and do the setup functions if the view is null. This prevents pop in of data and unnecessary API calls.
-        if (view == null) {
-            this.view = inflater.inflate(R.layout.forcast_fragment, container, false);
+        //if (view == null) {
+            /*this*/ View view = inflater.inflate(R.layout.forcast_fragment, container, false);
 
             // Setup the adapter so that it can be modified later asynchronously.
             this.adapter = new ForcastAdapter(null, view.getContext());
+        // Set up the recyclerview.
+        setupRecyclerView(view);
 
-            // Fetch the location data and setup all weather data on this fragment.
-            initializeWeatherData();
-
-            // Set up the recyclerview.
-            setupRecyclerView();
-        }
+        //}
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Fetch the location data and setup all weather data on this fragment.
+        initializeWeatherData();
     }
 
     /**
@@ -62,7 +66,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
             GetWeather.getWeatherData(location.getLatitudeLongitude(), adapter, getString(R.string.dark_sky_api), this);
 
             // Set the text on the location label.
-            TextView locationLabel = (TextView) view.findViewById(R.id.text_location_name);
+            TextView locationLabel = (TextView) getView().findViewById(R.id.text_location_name);
             locationLabel.setText(location.getName());
 
             // If they haven't, ask them to put in a location.
@@ -86,7 +90,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
     /**
      * Fetches and configures the RecyclerView to be displayed.
      */
-    private void setupRecyclerView() {
+    private void setupRecyclerView(View view) {
         // Get the recyclerview so that we can set it up.
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_week_forecast);
 
@@ -100,7 +104,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         // When the user taps an item, a new instance of ForecastDetailFragment is provided and the position they selected is passed.
-                        pushToFragmentManager(getFragmentManager(), R.id.content_frame, new ForcastDayFragment().newInstance(adapter.weeklyForecast, position), true);
+                        pushToFragmentManager(getFragmentManager(), R.id.content_frame, ForcastDayFragment.newInstance(adapter.weeklyForecast, position), true);
                     }
                 }
         );
@@ -116,19 +120,19 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
      */
     public void updateCurrentConditions(Forcast weatherData) {
         // If the view doesn't exist, an error will occur because we are calling it below. Return to prevent this.
-        if (view == null || !isAdded()) {
+        if (getView() == null || !isAdded()) {
             return;
         }
 
         /**
          * Fetch all the text views to populate them below.
          */
-        TextView currentTempLabel           = (TextView) view.findViewById(R.id.text_current_temp);
-        TextView currentConditionLabel      = (TextView) view.findViewById(R.id.text_current_condition);
-        TextView currentPrecipitationLabel  = (TextView) view.findViewById(R.id.text_current_precipitation);
-        TextView currentWindLabel           = (TextView) view.findViewById(R.id.text_wind_speed);
-        TextView todayHighTempLabel         = (TextView) view.findViewById(R.id.text_today_high);
-        TextView todayLowTempLabel          = (TextView) view.findViewById(R.id.text_today_low);
+        TextView currentTempLabel           = (TextView) getView().findViewById(R.id.text_current_temp);
+        TextView currentConditionLabel      = (TextView)  getView().findViewById(R.id.text_current_condition);
+        TextView currentPrecipitationLabel  = (TextView)  getView().findViewById(R.id.text_current_precipitation);
+        TextView currentWindLabel           = (TextView)  getView().findViewById(R.id.text_wind_speed);
+        TextView todayHighTempLabel         = (TextView)  getView().findViewById(R.id.text_today_high);
+        TextView todayLowTempLabel          = (TextView)  getView().findViewById(R.id.text_today_low);
 
         /**
          * Fetch all the data.
@@ -163,7 +167,7 @@ public class ForcastFragment extends Fragment implements View.OnClickListener {
      * @param addToBackStack Does this needed to be added to the back stack for navigation purposes?
      */
     public static void pushToFragmentManager(FragmentManager fragmentManager, int target, Fragment fragment, Boolean addToBackStack) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction().replace(target, fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction().add(target, fragment);
 
         if(addToBackStack) transaction.addToBackStack(null);
 

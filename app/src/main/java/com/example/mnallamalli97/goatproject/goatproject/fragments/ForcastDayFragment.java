@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mnallamalli97.goatproject.goatproject.R;
-import com.example.mnallamalli97.goatproject.goatproject.adapter.ForcastAdapter;
+import com.example.mnallamalli97.goatproject.goatproject.adapter.ForcastHourlyAdapter;
 import com.example.mnallamalli97.goatproject.goatproject.models.DarkSky;
+import com.example.mnallamalli97.goatproject.goatproject.models.Weather;
+import com.example.mnallamalli97.goatproject.goatproject.services.GetWeather;
 
 import android.app.Fragment;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,7 @@ import java.util.TimeZone;
 public class ForcastDayFragment extends Fragment{
     View view;
     private RecyclerView recyclerView;
-    public ForcastAdapter adapter;
+    public ForcastHourlyAdapter adapter;
 
     /**
      * Creates a new instance of ForecastDetailFragment. This is primarily used so that we can pass the index (int selectedDay).
@@ -51,7 +53,7 @@ public class ForcastDayFragment extends Fragment{
         // Setup the view so that we can access it's components.
         if(view == null) this.view = inflater.inflate(R.layout.forcast_fragment_hourly, container, false);
 
-        this.adapter = new ForcastAdapter(null, view.getContext());
+        this.adapter = new ForcastHourlyAdapter(null, view.getContext());
 
         setupRecyclerView();
         // Populate all the text views on the fragment with the correct data.
@@ -68,6 +70,10 @@ public class ForcastDayFragment extends Fragment{
         // Get all of our arguments that were populated earlier.
         Bundle args = getArguments();
 
+        Weather location = new Weather(getActivity());
+        // Fetch the current forecast, which updates current conditions and weekly forecast.
+        GetWeather.getHourlyWeatherData(location.getLatitudeLongitude(), adapter, getString(R.string.dark_sky_api));
+
         /**
          * Setup all of our text views.
          */
@@ -79,7 +85,7 @@ public class ForcastDayFragment extends Fragment{
         /**
          * Format all of our data correctly.
          */
-        String dateString           = convertEpochToString(args.getInt("time"), "EEEE", "GMT-6:00");
+        String dateString           = makeDay(args.getInt("time"), "EEEE", "GMT-6:00");
         String conditionString      = args.getString("condition");
         long lowTempLong            = Math.round(Double.valueOf(args.getString("low")));
         long highTempLong           = Math.round(Double.valueOf(args.getString("high")));
@@ -116,6 +122,7 @@ public class ForcastDayFragment extends Fragment{
      * @param selectedDay
      * @return Bundle
      */
+
     private static Bundle createBundle(List<DarkSky> forecast, int selectedDay) {
         // Create a bundle so that we can access it when the view is being created below.
         Bundle bundle = new Bundle();
@@ -128,14 +135,13 @@ public class ForcastDayFragment extends Fragment{
          */
         bundle.putInt("time", dailyForecast.getTime());
         bundle.putString("condition", dailyForecast.getSummary());
-        bundle.putString("icon", "wi_forecast_io_" + dailyForecast.getIcon().replace("-", "_"));
         bundle.putString("low", String.valueOf(dailyForecast.getTemperatureMin()));
         bundle.putString("high", String.valueOf(dailyForecast.getTemperatureMax()));
 
         return bundle;
     }
 
-    public static String convertEpochToString(Integer epoch, String format, String timezone) {
+    public static String makeDay(Integer epoch, String format, String timezone) {
         // Convert the epoch to a long and then create a new date with it.
         Date date = new Date(epoch.longValue() * 1000);
 

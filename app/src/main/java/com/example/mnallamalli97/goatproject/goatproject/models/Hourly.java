@@ -14,7 +14,7 @@ public class Hourly {
 
     @SerializedName("data")
     @Expose
-    private List<DarkSky> data = null;
+    private List<DarkSkyHourly> data = null;
     @SerializedName("icon")
     @Expose
     private String icon;
@@ -22,11 +22,11 @@ public class Hourly {
     @Expose
     private String summary;
 
-    public List<DarkSky> getData() {
+    public List<DarkSkyHourly> getData() {
         return data;
     }
 
-    public void setData(List<DarkSky> data) {
+    public void setData(List<DarkSkyHourly> data) {
         this.data = data;
     }
 
